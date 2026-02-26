@@ -41,11 +41,20 @@ export default function Home() {
     setCompletion('');
   };
 
+  const handleExplainMore = () => {
+    if (!question.trim() || !completion) return;
+    const summary = completion.slice(0, 300);
+    setCompletion('');
+    complete(
+      `I asked: "${question}". You gave a brief answer. Please now explain this topic in more detail with additional context, examples, and practical tips. Here is what you said before: ${summary}`
+    );
+  };
+
   const showExamples = !completion && !isLoading && !error;
 
   return (
-    <div>
-      <h2 className="text-2xl font-semibold text-[#1a1a2e] mb-6">
+    <div style={{ animation: 'fadeInUp 0.4s ease-out' }}>
+      <h2 className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[#0E3B3D] mb-6">
         {APP_TAGLINE}
       </h2>
 
@@ -67,7 +76,12 @@ export default function Home() {
       )}
 
       {completion && (
-        <AnswerDisplay answer={completion} onAskAnother={handleReset} />
+        <AnswerDisplay
+          answer={completion}
+          onAskAnother={handleReset}
+          onExplainMore={handleExplainMore}
+          isLoading={isLoading}
+        />
       )}
 
       {showExamples && <ExampleQuestions onSelect={handleExampleSelect} />}

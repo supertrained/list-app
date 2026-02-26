@@ -7,17 +7,17 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <div className="max-w-[700px]">
-      <h2 className="text-3xl font-bold text-[#1a1a2e] mb-6">
+      <h2 className="font-[family-name:var(--font-heading)] text-3xl font-bold text-[#0E3B3D] mb-6">
         Your Privacy
       </h2>
 
-      <div className="space-y-6 text-xl text-[#1a1a2e] leading-relaxed">
+      <div className="space-y-6 font-[family-name:var(--font-body)] text-xl text-[#2D2D2D] leading-relaxed">
         <p>
           L.I.S.T. is built with your privacy as a top priority. Here is
           exactly what we do — and what we do not do — with your information.
         </p>
 
-        <h3 className="text-2xl font-semibold text-[#14507e] mt-8">
+        <h3 className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[#0E3B3D] mt-8">
           What we do NOT do
         </h3>
         <ul className="list-disc pl-6 space-y-2">
@@ -27,7 +27,7 @@ export default function PrivacyPage() {
           <li><strong>No data selling</strong> — we will never sell or share your personal information</li>
         </ul>
 
-        <h3 className="text-2xl font-semibold text-[#14507e] mt-8">
+        <h3 className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[#0E3B3D] mt-8">
           How your questions are handled
         </h3>
         <p>
@@ -40,7 +40,7 @@ export default function PrivacyPage() {
           the page, your questions are gone.
         </p>
 
-        <h3 className="text-2xl font-semibold text-[#14507e] mt-8">
+        <h3 className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[#0E3B3D] mt-8">
           Important information
         </h3>
         <p>
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
           information is sent — only the text of your question.
         </p>
 
-        <h3 className="text-2xl font-semibold text-[#14507e] mt-8">
+        <h3 className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[#0E3B3D] mt-8">
           Questions or concerns?
         </h3>
         <p>
@@ -59,8 +59,8 @@ export default function PrivacyPage() {
           thing to us.
         </p>
 
-        <div className="bg-white border-2 border-[#d0d0cc] rounded-lg px-6 py-4 mt-8">
-          <p className="text-lg text-[#4a4a5a]">
+        <div className="bg-white border-2 border-[#D1C9BD] border-l-4 border-l-[#C8922A] rounded-xl px-6 py-4 mt-8">
+          <p className="font-[family-name:var(--font-body)] text-lg text-[#5C5C5C]">
             This privacy information was last updated in February 2026.
           </p>
         </div>

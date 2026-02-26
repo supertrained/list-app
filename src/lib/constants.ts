@@ -33,3 +33,4 @@ export const LOADING_MESSAGES = [
 ];
 
 export const MAX_QUESTION_LENGTH = 500;
+export const MAX_PROMPT_LENGTH = 2000;

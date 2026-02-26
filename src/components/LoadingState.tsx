@@ -15,8 +15,11 @@ export default function LoadingState() {
 
   return (
     <div className="flex flex-col items-center justify-center py-12" aria-live="polite">
-      <div className="w-16 h-16 rounded-full bg-[#0d7a4f] animate-pulse mb-6" />
-      <p className="text-xl text-[#4a4a5a]">
+      <div
+        className="w-16 h-16 rounded-full mb-6"
+        style={{ animation: 'pulse-teal 1.5s ease-in-out infinite' }}
+      />
+      <p className="font-[family-name:var(--font-body)] text-xl text-[#5C5C5C]">
         {LOADING_MESSAGES[messageIndex]}
       </p>
     </div>

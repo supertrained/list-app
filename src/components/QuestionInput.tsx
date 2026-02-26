@@ -28,7 +28,7 @@ export default function QuestionInput({
     <div>
       <label
         htmlFor="question-input"
-        className="block text-[26px] font-bold text-[#1a1a2e] mb-3"
+        className="block font-[family-name:var(--font-heading)] text-[26px] font-bold text-[#0E3B3D] mb-3"
       >
         Ask any question about Australian government services
       </label>
@@ -42,20 +42,20 @@ export default function QuestionInput({
         rows={3}
         disabled={isLoading}
         autoFocus
-        className="w-full text-xl p-4 bg-white border-2 border-[#4a4a5a] rounded-lg text-[#1a1a2e] placeholder:text-[#7a7a8a] focus:border-[#1d6fb5] disabled:bg-gray-50 disabled:opacity-60 resize-none min-h-[120px]"
+        className="w-full font-[family-name:var(--font-body)] text-xl p-4 bg-white border-2 border-[#B5AC9F] rounded-lg text-[#2D2D2D] placeholder:text-[#5C5C5C] focus:border-[#1A5C5E] disabled:bg-[#E8E0D5] disabled:opacity-60 resize-none min-h-[120px] transition-[border-color] duration-150"
       />
       <div className="flex items-center justify-between mt-2">
-        <p className="text-base text-[#4a4a5a]">
+        <p className="font-[family-name:var(--font-body)] text-base text-[#5C5C5C]">
           Press Enter to search, Shift+Enter for a new line
         </p>
-        <p className="text-base text-[#4a4a5a]">
+        <p className="font-[family-name:var(--font-body)] text-base text-[#5C5C5C]">
           {value.length}/{MAX_QUESTION_LENGTH}
         </p>
       </div>
       <button
         onClick={onSubmit}
         disabled={!value.trim() || isLoading}
-        className="w-full mt-4 bg-[#0d7a4f] text-white text-xl font-bold px-8 py-4 rounded-lg hover:bg-[#095e3c] disabled:bg-[#999] disabled:cursor-not-allowed min-h-[56px] cursor-pointer transition-colors"
+        className="w-full mt-4 bg-[#C8922A] text-[#0E3B3D] font-[family-name:var(--font-body)] text-xl font-semibold px-8 py-4 rounded-lg hover:bg-[#A67720] disabled:bg-[#E8E0D5] disabled:text-[#5C5C5C] disabled:border-2 disabled:border-[#D1C9BD] disabled:opacity-60 disabled:cursor-not-allowed min-h-[56px] cursor-pointer transition-colors duration-150"
       >
         {isLoading ? 'Finding your answer...' : 'Get My Answer'}
       </button>
