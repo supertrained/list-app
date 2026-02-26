@@ -39,18 +39,6 @@ export default function Header() {
           >
             About
           </Link>
-          <Link
-            href="/privacy"
-            className="font-[family-name:var(--font-body)] text-lg text-white/80 hover:text-[#C8922A] no-underline transition-colors duration-150"
-          >
-            Privacy
-          </Link>
-          <Link
-            href="/terms"
-            className="font-[family-name:var(--font-body)] text-lg text-white/80 hover:text-[#C8922A] no-underline transition-colors duration-150"
-          >
-            Terms
-          </Link>
         </nav>
 
         {/* Mobile hamburger */}
@@ -74,7 +62,7 @@ export default function Header() {
 
       {/* Mobile dropdown */}
       <div
-        className={`sm:hidden overflow-hidden transition-[max-height] duration-300 ease-in-out ${menuOpen ? 'max-h-60' : 'max-h-0'}`}
+        className={`sm:hidden overflow-hidden transition-[max-height] duration-300 ease-in-out ${menuOpen ? 'max-h-40' : 'max-h-0'}`}
       >
         <nav className="flex flex-col border-t border-white/10 px-6 pb-4">
           <Link
@@ -87,23 +75,9 @@ export default function Header() {
           <Link
             href="/about"
             onClick={closeMenu}
-            className="font-[family-name:var(--font-body)] text-lg text-white/80 hover:text-[#C8922A] no-underline py-3 border-b border-white/10 transition-colors duration-150"
-          >
-            About
-          </Link>
-          <Link
-            href="/privacy"
-            onClick={closeMenu}
-            className="font-[family-name:var(--font-body)] text-lg text-white/80 hover:text-[#C8922A] no-underline py-3 border-b border-white/10 transition-colors duration-150"
-          >
-            Privacy
-          </Link>
-          <Link
-            href="/terms"
-            onClick={closeMenu}
             className="font-[family-name:var(--font-body)] text-lg text-white/80 hover:text-[#C8922A] no-underline py-3 transition-colors duration-150"
           >
-            Terms
+            About
           </Link>
         </nav>
       </div>

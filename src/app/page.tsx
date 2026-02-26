@@ -179,11 +179,14 @@ function Home() {
 
   return (
     <div style={{ animation: 'fadeInUp 0.4s ease-out' }}>
-      <h2 className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[#0E3B3D] mb-4">
-        {APP_TAGLINE}
-      </h2>
-
-      <DisclaimerBanner />
+      <section className="text-center mb-12 pt-4">
+        <h2 className="font-[family-name:var(--font-heading)] text-4xl sm:text-5xl font-bold text-[#0E3B3D] leading-tight tracking-tight mb-3">
+          {APP_TAGLINE}
+        </h2>
+        <p className="font-[family-name:var(--font-body)] text-lg text-[#5C5C5C]">
+          No jargon. No tracking. Just plain-English help.
+        </p>
+      </section>
 
       <div ref={questionSectionRef} className="print:hidden">
         <QuestionInput
@@ -215,6 +218,8 @@ function Home() {
       )}
 
       {showExamples && <ExampleQuestions onSelect={handleExampleSelect} />}
+
+      <DisclaimerBanner />
 
       <ExplainMoreModal
         isOpen={showExplainModal}
