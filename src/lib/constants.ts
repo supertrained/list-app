@@ -8,8 +8,8 @@ export const EXAMPLE_QUESTIONS = [
     category: 'MyGov',
   },
   {
-    text: 'What documents do I need to apply for the Age Pension?',
-    category: 'Pensions',
+    text: 'What help is available if I\'m struggling with the cost of living?',
+    category: 'Support Services',
   },
   {
     text: 'How do I update my address with Centrelink?',
@@ -20,12 +20,12 @@ export const EXAMPLE_QUESTIONS = [
     category: 'Aged Care',
   },
   {
-    text: 'How do I lodge my tax return with the ATO?',
-    category: 'Tax',
+    text: 'Who do I contact about a water quality issue in my area?',
+    category: 'Environment',
   },
   {
-    text: 'How do I get a Seniors Card in NSW?',
-    category: 'NSW Services',
+    text: 'What mental health support is available for older Australians?',
+    category: 'Health & Wellbeing',
   },
 ];
 
@@ -33,6 +33,20 @@ export const LOADING_MESSAGES = [
   'Looking up the latest information...',
   'Finding the clearest answer for you...',
   'Checking official sources...',
+  'Almost there...',
+];
+
+export const FOLLOW_UP_LOADING_MESSAGES = [
+  'Looking into your follow-up...',
+  'Finding a clear answer for you...',
+  'Checking relevant sources...',
+  'Almost there...',
+];
+
+export const EXPLAIN_MORE_LOADING_MESSAGES = [
+  'Digging deeper into the details...',
+  'Breaking it down further...',
+  'Finding a clearer explanation...',
   'Almost there...',
 ];
 

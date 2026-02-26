@@ -6,10 +6,11 @@ interface ExampleQuestionsProps {
 
 const categoryColors: Record<string, string> = {
   'MyGov': 'border-l-[#1A5C5E]',
-  'Pensions': 'border-l-[#C8922A]',
+  'Support Services': 'border-l-[#C8922A]',
   'Centrelink': 'border-l-[#4A7FA5]',
   'Aged Care': 'border-l-[#3D7B5F]',
-  'NSW Services': 'border-l-[#C45D3E]',
+  'Environment': 'border-l-[#2D8B6F]',
+  'Health & Wellbeing': 'border-l-[#C45D3E]',
 };
 
 export default function ExampleQuestions({ onSelect }: ExampleQuestionsProps) {

@@ -6,14 +6,14 @@ interface QuestionInputProps {
   value: string;
   onChange: (value: string) => void;
   onSubmit: () => void;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 export default function QuestionInput({
   value,
   onChange,
   onSubmit,
-  isLoading,
+  isLoading = false,
 }: QuestionInputProps) {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {

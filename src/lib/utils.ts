@@ -14,3 +14,13 @@ export function stripMarkdown(text: string): string {
 export function generateBlockId(): string {
   return crypto.randomUUID();
 }
+
+export function findInsertIndex(thread: { parentId?: string; id: string }[], parentId: string): number {
+  const parentIdx = thread.findIndex(b => b.id === parentId);
+  if (parentIdx === -1) return thread.length;
+  let idx = parentIdx + 1;
+  while (idx < thread.length && thread[idx].parentId !== undefined) {
+    idx++;
+  }
+  return idx;
+}

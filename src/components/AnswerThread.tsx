@@ -1,18 +1,21 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import type { ResponseBlock as ResponseBlockType } from '@/types';
-import { stripMarkdown } from '@/lib/utils';
+import { stripMarkdown, findInsertIndex } from '@/lib/utils';
 import ResponseBlock from './ResponseBlock';
 import StreamingBlock from './StreamingBlock';
+import LoadingState from './LoadingState';
 import FollowUpInput from './FollowUpInput';
 
 interface AnswerThreadProps {
   thread: ResponseBlockType[];
   streamingContent: string;
   streamingHeading: string;
+  streamingParentId?: string;
   isLoading: boolean;
-  onExplainMore: () => void;
+  activeBlockType: ResponseBlockType['type'] | null;
+  onExplainMore: (blockId: string) => void;
   onAskAnother: () => void;
   onFollowUp: (question: string) => void;
   onSave: () => void;
@@ -23,7 +26,9 @@ export default function AnswerThread({
   thread,
   streamingContent,
   streamingHeading,
+  streamingParentId,
   isLoading,
+  activeBlockType,
   onExplainMore,
   onAskAnother,
   onFollowUp,
@@ -32,8 +37,8 @@ export default function AnswerThread({
 }: AnswerThreadProps) {
   const [readingBlockId, setReadingBlockId] = useState<string | null>(null);
   const [speechSupported, setSpeechSupported] = useState(false);
-  const bottomRef = useRef<HTMLDivElement>(null);
-  const prevThreadLength = useRef(thread.length);
+  const streamingTopRef = useRef<HTMLDivElement>(null);
+  const hasScrolledForStream = useRef(false);
 
   useEffect(() => {
     setSpeechSupported(typeof window !== 'undefined' && 'speechSynthesis' in window);
@@ -48,20 +53,20 @@ export default function AnswerThread({
     };
   }, []);
 
-  // Auto-scroll when new blocks are added to the thread
+  // Reset scroll flag when streaming ends
   useEffect(() => {
-    if (thread.length > prevThreadLength.current) {
-      bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!streamingContent && !isLoading) {
+      hasScrolledForStream.current = false;
     }
-    prevThreadLength.current = thread.length;
-  }, [thread.length]);
+  }, [streamingContent, isLoading]);
 
-  // Also scroll when streaming starts
+  // Scroll to new section when follow-up/explain-more loading begins
   useEffect(() => {
-    if (streamingContent && streamingContent.length < 50) {
-      bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if ((isLoading || streamingContent) && !hasScrolledForStream.current && thread.length > 0) {
+      hasScrolledForStream.current = true;
+      streamingTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }, [streamingContent]);
+  }, [isLoading, streamingContent, thread.length]);
 
   const handleReadAloud = (blockId: string, content: string) => {
     if (!speechSupported) return;
@@ -89,33 +94,81 @@ export default function AnswerThread({
 
   const isStreaming = isLoading || !!streamingContent;
 
+  // Calculate where the streaming block should be inserted
+  const streamingInsertAfterIndex = isStreaming && streamingParentId
+    ? findInsertIndex(thread, streamingParentId) - 1
+    : null;
+
+  const renderStreamingBlock = () => {
+    const showInlineLoading = isLoading && !streamingContent && activeBlockType && activeBlockType !== 'initial';
+    const variant = activeBlockType === 'follow-up' ? 'follow-up' : 'explain-more';
+
+    return (
+      <div ref={streamingTopRef}>
+        {showInlineLoading ? (
+          <div className="mt-6" style={{ animation: 'fadeInUp 0.4s ease-out' }}>
+            {/* Vertical connector before loading state */}
+            {streamingParentId && (
+              <div className="flex justify-center my-1">
+                <div className="w-px h-5 bg-[#1A5C5E] opacity-30" />
+              </div>
+            )}
+            <LoadingState
+              question={streamingHeading}
+              variant={variant}
+            />
+          </div>
+        ) : (
+          <>
+            {streamingParentId && (
+              <div className="flex justify-center my-1">
+                <div className="w-px h-5 bg-[#1A5C5E] opacity-30" />
+              </div>
+            )}
+            <StreamingBlock
+              heading={streamingHeading}
+              content={streamingContent}
+              isLoading={isLoading}
+              isChild={!!streamingParentId}
+            />
+          </>
+        )}
+      </div>
+    );
+  };
+
+  // Whether the streaming block goes at the end (no parent, like follow-ups or initial)
+  const streamingAtEnd = isStreaming && streamingInsertAfterIndex === null;
+
   return (
     <div className="mt-8" style={{ animation: 'fadeInUp 0.4s ease-out' }}>
-      {/* Completed response blocks */}
+      {/* Completed response blocks with in-place streaming */}
       {thread.map((block, index) => (
-        <ResponseBlock
-          key={block.id}
-          block={block}
-          isLatest={index === thread.length - 1 && !isStreaming}
-          onExplainMore={onExplainMore}
-          isLoading={isLoading}
-          isReading={readingBlockId === block.id}
-          onReadAloud={() => handleReadAloud(block.id, block.content)}
-          speechSupported={speechSupported}
-        />
+        <React.Fragment key={block.id}>
+          {/* Vertical connector before child blocks */}
+          {block.parentId && (
+            <div className="flex justify-center my-1">
+              <div className="w-px h-5 bg-[#1A5C5E] opacity-30" />
+            </div>
+          )}
+
+          <ResponseBlock
+            block={block}
+            isChild={!!block.parentId}
+            onExplainMore={() => onExplainMore(block.id)}
+            isLoading={isLoading}
+            isReading={readingBlockId === block.id}
+            onReadAloud={() => handleReadAloud(block.id, block.content)}
+            speechSupported={speechSupported}
+          />
+
+          {/* Insert streaming block after parent's children */}
+          {streamingInsertAfterIndex === index && renderStreamingBlock()}
+        </React.Fragment>
       ))}
 
-      {/* Currently streaming block */}
-      {isStreaming && (
-        <StreamingBlock
-          heading={streamingHeading}
-          content={streamingContent}
-          isLoading={isLoading}
-        />
-      )}
-
-      {/* Scroll anchor */}
-      <div ref={bottomRef} />
+      {/* Streaming at end (follow-ups, initial responses) */}
+      {streamingAtEnd && renderStreamingBlock()}
 
       {/* Follow-up input (shown when thread has content and not streaming) */}
       {thread.length > 0 && !isStreaming && (
@@ -123,29 +176,48 @@ export default function AnswerThread({
       )}
 
       {/* Bottom action bar */}
-      <div className="flex flex-col sm:flex-row gap-4 mt-6 print:hidden">
-        <button
-          onClick={onAskAnother}
-          className="flex-1 bg-[#C8922A] text-[#0E3B3D] font-[family-name:var(--font-body)] text-xl font-semibold px-8 py-4 rounded-lg hover:bg-[#A67720] min-h-[56px] cursor-pointer transition-colors duration-150"
-        >
-          Ask Another Question
-        </button>
-      </div>
-      <div className="flex flex-col sm:flex-row gap-4 mt-4 print:hidden">
-        <button
-          onClick={handlePrint}
-          className="flex-1 bg-transparent text-[#1A5C5E] font-[family-name:var(--font-body)] text-xl font-semibold px-8 py-4 rounded-lg border-2 border-[#D1C9BD] hover:bg-[#FAF6F0] min-h-[56px] cursor-pointer transition-colors duration-150"
-        >
-          Print This Answer
-        </button>
-        <button
-          onClick={onSave}
-          disabled={isSaved}
-          className="flex-1 bg-transparent text-[#1A5C5E] font-[family-name:var(--font-body)] text-xl font-semibold px-8 py-4 rounded-lg border-2 border-[#D1C9BD] hover:bg-[#FAF6F0] min-h-[56px] cursor-pointer transition-colors duration-150 disabled:opacity-60 disabled:cursor-not-allowed"
-        >
-          {isSaved ? 'Response Saved' : 'Save This Answer'}
-        </button>
-      </div>
+      {thread.length > 0 && !isStreaming && (
+        <div className="flex items-center justify-between gap-3 mt-8 pt-6 border-t-2 border-[#D1C9BD] print:hidden">
+          {/* Utility actions */}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={handlePrint}
+              aria-label="Print this answer"
+              title="Print this answer"
+              className="flex items-center justify-center w-11 h-11 rounded-lg text-[#5C5C5C] hover:text-[#1A5C5E] hover:bg-[rgba(26,92,94,0.08)] cursor-pointer transition-colors duration-150"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="6 9 6 2 18 2 18 9" />
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                <rect x="6" y="14" width="12" height="8" />
+              </svg>
+            </button>
+            <button
+              onClick={onSave}
+              disabled={isSaved}
+              aria-label={isSaved ? 'Answer saved' : 'Save this answer'}
+              title={isSaved ? 'Answer saved' : 'Save this answer'}
+              className={`flex items-center justify-center w-11 h-11 rounded-lg cursor-pointer transition-colors duration-150 ${
+                isSaved
+                  ? 'text-[#C8922A] cursor-default'
+                  : 'text-[#5C5C5C] hover:text-[#1A5C5E] hover:bg-[rgba(26,92,94,0.08)]'
+              } disabled:cursor-default`}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill={isSaved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Primary CTA */}
+          <button
+            onClick={onAskAnother}
+            className="bg-[#D4A94E] text-[#0E3B3D] font-[family-name:var(--font-body)] text-lg font-semibold px-6 py-3 rounded-lg hover:bg-[#C8922A] min-h-[48px] cursor-pointer transition-colors duration-150"
+          >
+            Ask a Different Question
+          </button>
+        </div>
+      )}
     </div>
   );
 }

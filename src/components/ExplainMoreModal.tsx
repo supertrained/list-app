@@ -95,6 +95,16 @@ export default function ExplainMoreModal({
         className="relative bg-[#FAF6F0] rounded-xl shadow-xl max-w-lg w-full p-8 border-2 border-[#D1C9BD]"
         style={{ animation: 'modalSlideUp 0.25s ease-out forwards' }}
       >
+        <button
+          onClick={onClose}
+          aria-label="Close dialog"
+          className="absolute top-4 right-4 text-[#5C5C5C] hover:text-[#0E3B3D] cursor-pointer transition-colors duration-150"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
         <h2
           id="explain-modal-title"
           className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[#0E3B3D] mb-6"

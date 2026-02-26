@@ -10,10 +10,14 @@ export interface SavedResponse {
   savedAt: number;
 }
 
+export type InteractionType = 'initial' | 'follow-up' | 'explain-more';
+
 export interface ResponseBlock {
   id: string;
-  type: 'initial' | 'explain-more' | 'follow-up';
+  type: InteractionType;
   heading: string;
   content: string;
+  citations: string[];
   timestamp: number;
+  parentId?: string;
 }

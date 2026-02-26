@@ -2,19 +2,28 @@
 
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { stripCitationDelimiter } from '@/lib/citations';
 
 interface StreamingBlockProps {
   heading: string;
   content: string;
   isLoading: boolean;
+  isChild?: boolean;
 }
 
-export default function StreamingBlock({ heading, content, isLoading }: StreamingBlockProps) {
+export default function StreamingBlock({ heading, content: rawContent, isLoading, isChild }: StreamingBlockProps) {
+  const content = stripCitationDelimiter(rawContent);
   return (
     <div className="mt-6" style={{ animation: 'fadeInUp 0.4s ease-out' }} aria-live="polite">
       {heading && (
         <div className="flex items-center gap-3 mb-3">
           <div className="h-px flex-1 bg-[#D1C9BD]" />
+          {isChild && (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A5C5E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 opacity-60" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+            </svg>
+          )}
           <h3 className="font-[family-name:var(--font-heading)] text-lg font-semibold text-[#1A5C5E] shrink-0">
             {heading}
           </h3>
