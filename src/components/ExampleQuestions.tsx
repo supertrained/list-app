@@ -19,11 +19,12 @@ export default function ExampleQuestions({ onSelect }: ExampleQuestionsProps) {
         Not sure where to start? Try one of these:
       </p>
       <div className="flex flex-col gap-3">
-        {EXAMPLE_QUESTIONS.map((q) => (
+        {EXAMPLE_QUESTIONS.map((q, i) => (
           <button
             key={q.text}
             onClick={() => onSelect(q.text)}
-            className={`text-left bg-white border-2 border-[#D1C9BD] border-l-4 ${categoryColors[q.category] || 'border-l-[#1A5C5E]'} rounded-xl px-6 py-4 font-[family-name:var(--font-body)] text-lg text-[#2D2D2D] hover:border-[#1A5C5E] hover:bg-[#FAF6F0] cursor-pointer transition-all duration-150 min-h-[56px] hover:shadow-sm`}
+            style={{ animation: 'fadeInUp 0.4s ease-out forwards', animationDelay: `${i * 60}ms`, opacity: 0 }}
+            className={`text-left bg-white border-2 border-[#D1C9BD] border-l-4 ${categoryColors[q.category] || 'border-l-[#1A5C5E]'} rounded-xl px-6 py-4 font-[family-name:var(--font-body)] text-lg text-[#2D2D2D] hover:border-[#1A5C5E] hover:bg-[#FAF6F0] hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer transition-all duration-150 min-h-[56px] hover:shadow-sm`}
           >
             <span className="text-sm font-semibold text-[#1A5C5E] uppercase tracking-wide block mb-1">
               {q.category}

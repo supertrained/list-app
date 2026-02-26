@@ -54,7 +54,7 @@ export default function Home() {
 
   return (
     <div style={{ animation: 'fadeInUp 0.4s ease-out' }}>
-      <h2 className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[#0E3B3D] mb-6">
+      <h2 className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[#0E3B3D] mb-4">
         {APP_TAGLINE}
       </h2>
 
