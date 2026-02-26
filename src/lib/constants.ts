@@ -20,6 +20,10 @@ export const EXAMPLE_QUESTIONS = [
     category: 'Aged Care',
   },
   {
+    text: 'How do I lodge my tax return with the ATO?',
+    category: 'Tax',
+  },
+  {
     text: 'How do I get a Seniors Card in NSW?',
     category: 'NSW Services',
   },
@@ -34,3 +38,5 @@ export const LOADING_MESSAGES = [
 
 export const MAX_QUESTION_LENGTH = 500;
 export const MAX_PROMPT_LENGTH = 2000;
+
+export const DISCLAIMER_STORAGE_KEY = 'list-disclaimer-accepted';

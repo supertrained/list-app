@@ -3,6 +3,7 @@ import { Source_Serif_4, Atkinson_Hyperlegible_Next } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import DisclaimerModal from '@/components/DisclaimerModal';
 
 const sourceSerif = Source_Serif_4({
   variable: '--font-source-serif',
@@ -51,6 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${sourceSerif.variable} ${atkinson.variable} antialiased`}>
+        <DisclaimerModal />
         <div className="min-h-screen flex flex-col">
           <Header />
           <main className="flex-1 w-full max-w-[800px] mx-auto px-6 py-8">

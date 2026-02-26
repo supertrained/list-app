@@ -28,6 +28,12 @@ export default function Header() {
         {/* Desktop nav */}
         <nav className="hidden sm:flex gap-6">
           <Link
+            href="/saved"
+            className="font-[family-name:var(--font-body)] text-lg text-white/80 hover:text-[#C8922A] no-underline transition-colors duration-150"
+          >
+            Saved
+          </Link>
+          <Link
             href="/about"
             className="font-[family-name:var(--font-body)] text-lg text-white/80 hover:text-[#C8922A] no-underline transition-colors duration-150"
           >
@@ -71,6 +77,13 @@ export default function Header() {
         className={`sm:hidden overflow-hidden transition-[max-height] duration-300 ease-in-out ${menuOpen ? 'max-h-60' : 'max-h-0'}`}
       >
         <nav className="flex flex-col border-t border-white/10 px-6 pb-4">
+          <Link
+            href="/saved"
+            onClick={closeMenu}
+            className="font-[family-name:var(--font-body)] text-lg text-white/80 hover:text-[#C8922A] no-underline py-3 border-b border-white/10 transition-colors duration-150"
+          >
+            Saved
+          </Link>
           <Link
             href="/about"
             onClick={closeMenu}

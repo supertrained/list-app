@@ -54,9 +54,10 @@ export default function AboutPage() {
           <li>&ldquo;I always feel like I&apos;ll click the wrong thing&rdquo;</li>
         </ul>
         <p>
-          Whether you are managing your pension, sorting out Medicare, navigating
-          aged care for a loved one, or just trying to update your address with
-          Centrelink — L.I.S.T. is here to make it simple.
+          Whether you are managing your pension, sorting out Medicare, lodging a
+          tax return, navigating aged care for a loved one, or just trying to
+          understand any Australian government service — L.I.S.T. is here to make
+          it simple.
         </p>
 
         <h3 className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[#0E3B3D] mt-8">
