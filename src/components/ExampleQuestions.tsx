@@ -11,6 +11,8 @@ const categoryColors: Record<string, string> = {
   'Aged Care': 'border-l-[#3D7B5F]',
   'Environment': 'border-l-[#2D8B6F]',
   'Health & Wellbeing': 'border-l-[#C45D3E]',
+  'State Services': 'border-l-[#4A7FA5]',
+  'Concessions': 'border-l-[#2D8B6F]',
 };
 
 export default function ExampleQuestions({ onSelect }: ExampleQuestionsProps) {

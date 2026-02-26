@@ -30,14 +30,14 @@ export default function QuestionInput({
         htmlFor="question-input"
         className="block font-[family-name:var(--font-heading)] text-xl font-semibold text-[#0E3B3D] mb-3"
       >
-        Ask any question about Australian government services
+        Ask any question about Australian government services and life admin
       </label>
       <textarea
         id="question-input"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Type your question here... For example: How do I apply for the Age Pension?"
+        placeholder="Type your question here... For example: How do I apply for the Age Pension? Or: What concessions can I get in my state?"
         maxLength={MAX_QUESTION_LENGTH}
         rows={3}
         disabled={isLoading}

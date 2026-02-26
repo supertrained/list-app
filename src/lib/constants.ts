@@ -12,16 +12,16 @@ export const EXAMPLE_QUESTIONS = [
     category: 'Support Services',
   },
   {
-    text: 'How do I update my address with Centrelink?',
-    category: 'Centrelink',
+    text: 'How do I renew my driver licence in QLD?',
+    category: 'State Services',
   },
   {
     text: 'What is a Home Care Package and how do I apply?',
     category: 'Aged Care',
   },
   {
-    text: 'Who do I contact about a water quality issue in my area?',
-    category: 'Environment',
+    text: 'What energy concessions can I get in SA?',
+    category: 'Concessions',
   },
   {
     text: 'What mental health support is available for older Australians?',
@@ -30,9 +30,9 @@ export const EXAMPLE_QUESTIONS = [
 ];
 
 export const LOADING_MESSAGES = [
-  'Looking up the latest information...',
+  'Looking up the latest Australian information...',
   'Finding the clearest answer for you...',
-  'Checking official sources...',
+  'Checking official Australian sources...',
   'Almost there...',
 ];
 
