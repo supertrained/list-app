@@ -1,1 +1,0 @@
-lf-ads-staging-ping
